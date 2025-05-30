@@ -339,19 +339,6 @@ begin
   Assert(AAction <> raPull, 'PULL actions do not take part in a commit.');
   Assert((AFileName <> '') or (ADestination <> ''));
 
-{
-  1. AFileName = ''
-    1.1 ADestination = '' => Assertion failure
-    1.2 ADestination = 'some/path/' => 'some/path/'
-    1.3 ADestination = 'some/path' => 'some/path/'
-    1.4 ADestination = 'some/path/doc.pdf' => 'some/path/doc.pdf'
-
-  2. AFileName = 'some\local\path\text.txt'
-    2.1 ADestination = '' => 'text.txt'
-    2.2 ADestination = 'some/path/' => 'some/path/text.txt'
-    2.3 ADestination = 'some/path' => 'some/path/text.txt'
-    2.4 ADestination = 'some/path/doc.pdf' => 'some/path/doc.pdf'
-}
   LDestination := ADestination;
   if LDestination = '' then
     LDestination := ExtractFileName(AFileName)
