@@ -29,13 +29,13 @@ VGCTourHelper runs on three kinds of data files
 	- when working automatically it updates the tournament whenever the main file is updated or when a new TOM output file is added to the folder of the first selected one
 	- if not working automatically each updated or new file has to be selected and the tournament has to be manually updated by clicking a button
 2. Paste file (*.csv)
-	- must include two columns: "PlayerId" and "Paste" (names are changeable, see [configuration](##Config)), separated by ";"
+	- must include two columns: "PlayerId" and "Paste" (names are changeable, see [configuration](#Config)), separated by ";"
 	- the column "Paste" can contain either a URL to PokePaste (or one of its forks) or the entire team in the export-to-text format
 	- OTS and CTS formats are equally accepted - reserved informations (such as natures) will never be on display
 3. Data files (*.csv)
-	- internal resources for VGCTourHelper and are usually shipped with the application itself (you can find them under [this path](./Resources/Data))
+	- internal resources for VGCTourHelper and are usually shipped with the application itself (you can find them under [this path](./Home/Resources/Data))
 	- should never need to be updated or edited
-	- as all of the CSV files, they depend on [configuration](##Config)
+	- as all of the CSV files, they depend on [configuration](#Config)
 
 A manual player id-paste input is also provided to account for unexpected cases, such as late non-preregistered players or invalid URLs/exports.
 
@@ -43,11 +43,11 @@ A manual player id-paste input is also provided to account for unexpected cases,
 
 ### Teamlists
 
-Each player's teamlist is printed before starting the tournament as an HTML file named `<GUID>.html`, where `<GUID>` represents the random GUID that VGCTourHelper assigned to that player (in order not to show any PID) under the `TeamlistOutputPath` (see [config](##Config)). If the tournament is being streamed, any time a match is selected for streaming, the teamlists of the two players in that match are printed as HTML files named after the [config](##Config) properties `Player1Output` and `Player2Output` (this time including the current swiss-score for each of them) .
+Each player's teamlist is printed before starting the tournament as an HTML file named `<GUID>.html`, where `<GUID>` represents the random GUID that VGCTourHelper assigned to that player (in order not to show any PID) under the `TeamlistOutputPath` (see [config](#Config)). If the tournament is being streamed, any time a match is selected for streaming, the teamlists of the two players in that match are printed as HTML files named after the [config](#Config) properties `Player1Output` and `Player2Output` (this time including the current swiss-score for each of them) .
 
 ### Pairings, Standings and Overlay
 
-Overlay is printed after selecting a streamed match, Pairings are printed after each update on the tournament and Standings are printed only when a tournament phase ends (that is - the end of the swiss, the end of the first day for two-day tournaments or the end of the whole tournament). All of those are HTML files named after the corresponding `<name>Output` (`<name>` stands for "Pairings", "Standings" or "Overlay") setting on the [config](##Config) and they always overwrite. There is no way to get the Standings file other than when a tournament phase ends.
+Overlay is printed after selecting a streamed match, Pairings are printed after each update on the tournament and Standings are printed only when a tournament phase ends (that is - the end of the swiss, the end of the first day for two-day tournaments or the end of the whole tournament). All of those are HTML files named after the corresponding `<name>Output` (`<name>` stands for "Pairings", "Standings" or "Overlay") setting on the [config](#Config) and they always overwrite. There is no way to get the Standings file other than when a tournament phase ends.
 
 ### Tournament
 
@@ -66,7 +66,7 @@ When **AutoUpdate** is off none of this happens and you have to select the new f
 ## Config
 
 Most of the application settings are configurable: this can be done in the GUI by clicking the "Edit Config" button or by editing the [config file](./Home/Config.yaml). In the 99% of cases the default values are the right configuration for the app, but we are going to focus on those single settings that some users could want to edit.
-- `PlayerIdFieldName` and `PasteIdFieldName` are the column names for the Paste CSV (see [here](##Inputs-and-data-files#2))
+- `PlayerIdFieldName` and `PasteIdFieldName` are the column names for the Paste CSV (see [here](#Inputs-and-data-files#2))
 - `TeamlistTemplate`, `PokemonTemplate`, `PairingsTemplate`, `StandingsTemplate`, `TournamentTemplate` and `OverlayTemplate` are the HTML templates used: they can be changed in order to customize the appearance of the outputs
 - `TeamlistIncludes`, `PairingsIncludes` and `StandingsIncludes` are list of JS or CSS files (separated by a space) that are included in the correlated HTML outputs's `<head>` section
 - `TeamlistOutputPath`, `PairingsOutput`, `StandingsOutput`, `OverlayOutput`, `Player1Output` and `Player2Output` are the names/paths for the output files
@@ -89,7 +89,7 @@ Inside the config the following rules apply
 
 ### [Teamlist](./Resources/teamlist.html)
 
-It's one of the only two mandatory template files: it should contain the basic structure of an HTML file with the specific `%INCLUDE:Teamlist%` macro in its `<head>` section (which works as an "anchor" to insert the include files mentioned in the [config section](##Config)), any number of macros on the player data (as `%FirstName%` or `%Wins%`) and the special macro `%Team%`, which will be replaced with one entry of the [pokémon template](##Templates###Pokemon) for each member of that player's team.
+It's one of the only two mandatory template files: it should contain the basic structure of an HTML file with the specific `%INCLUDE:Teamlist%` macro in its `<head>` section (which works as an "anchor" to insert the include files mentioned in the [config section](#Config)), any number of macros on the player data (as `%FirstName%` or `%Wins%`) and the special macro `%Team%`, which will be replaced with one entry of the [pokémon template](#Templates###Pokemon) for each member of that player's team.
 
 ### [Pokemon](./Resources/pokemon.html)
 
@@ -110,15 +110,15 @@ In addiction to macros on the pokemon data (such as `%PokemonIndex%`, `%Ability%
 
 ### Pairings and Standings
 
-There are no default file for those template as they are built-in inside the application itself. All of those templates contain the basic structure of an HTML  file, each one with its `%INCLUDE:<name>%` macro in the `<head>` section, that matches the `%<name>Includes%` property on the [config](##Config) (`<name>` stands for "Pairings" or "Standings"). In addiction to that, those templates should contain, in the `<body>` section, the `%<name>%` macro, which will be replaced with the actual HTML content.
+There are no default file for those template as they are built-in inside the application itself. All of those templates contain the basic structure of an HTML  file, each one with its `%INCLUDE:<name>%` macro in the `<head>` section, that matches the `%<name>Includes%` property on the [config](#Config) (`<name>` stands for "Pairings" or "Standings"). In addiction to that, those templates should contain, in the `<body>` section, the `%<name>%` macro, which will be replaced with the actual HTML content.
 
 ### Tournament
 
-It's the same as [pairings and standings](##Templates###Pairings-and-Standings) with the only difference that in the `<body>` section, instead of the `%Tournament%` macro, the `%RoundsHeader%` and the `%RoundsContent%` are used (and they represent all the rounds of the tournament).
+It's the same as [pairings and standings](#Pairings-and-Standings) with the only difference that in the `<body>` section, instead of the `%Tournament%` macro, the `%RoundsHeader%` and the `%RoundsContent%` are used (and they represent all the rounds of the tournament).
 
 ### Overlay
 
-This is the only template without default (neither built-in nor a file): if no file is specified in `OverlayTemplate` on the [config](##Config) (or when that file does not exist), the overlay output is simply not rendered. No specific includes are expected for this output, since it does not rely solely on VGCTourHelper. The app just provides the needed data of the two players in the match: player 1 data is retrievable using `%P1:PropertyName%` macros while player 2 data is retrievable using `%P2:PropertyName%` macros.
+This is the only template without default (neither built-in nor a file): if no file is specified in `OverlayTemplate` on the [config](#Config) (or when that file does not exist), the overlay output is simply not rendered. No specific includes are expected for this output, since it does not rely solely on VGCTourHelper. The app just provides the needed data of the two players in the match: player 1 data is retrievable using `%P1:PropertyName%` macros while player 2 data is retrievable using `%P2:PropertyName%` macros.
 
 ## License
 
