@@ -374,8 +374,7 @@ var
   LStep: string;
 begin
   for LStep in ASingleSteps do
-    Result := Result + IncludeTrailingPathDelimiter(LStep);
-  Result := ReplaceText(Result, '{App}', AppPath);
+    Result := Result + IncludeTrailingPathDelimiter(ReplaceText(LStep, '{App}', AppPath));
 end;
 
 function SlicePath(const APath, ARemoveUntil: string): string;

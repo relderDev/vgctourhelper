@@ -66,14 +66,20 @@ When **AutoUpdate** is off none of this happens and you have to select the new f
 
 ## Config
 
-Most of the application settings are configurable: this can be done in the GUI by clicking the "Edit Config" button or by editing the [config file](./Home/Config.yaml). In the 99% of cases the default values are the right configuration for the app, but we are going to focus on those single settings that some users could want to edit.
+Most of the application settings are configurable: this can be done in the GUI by clicking the "Edit Config" button or by editing the [config file](./Home/Config.yaml).
+
+The [template configuration file](./Home/Resources/config_template) shows every configurable property and its default value, used when said entry is empty or not defined on the [config file](./Home/Config.yaml).
+There are a few empty properties on the template file: those are there just for you to know that they are configurable options even if not used by default. **Do NOT edit the template file, it will break the "Edit Config" behaviour!**
+It's completely possible to run the application without any configuration file at all - it will run on the default values, it's actually the best approach -, the one published is this repository is just an example.
+
+In the 99% of cases the default values are the right configuration for the app, but we are going to focus on those single settings that some users could want to edit.
 - `PlayerIdFieldName` and `PasteIdFieldName` are the column names for the Paste CSV (see [here](#Inputs-and-data-files))
 - `TeamlistTemplate`, `PokemonTemplate`, `PairingsTemplate`, `StandingsTemplate`, `TournamentTemplate` and `OverlayTemplate` are the HTML templates used: they can be changed in order to customize the appearance of the outputs
 - `TeamlistIncludes`, `PairingsIncludes` and `StandingsIncludes` are list of JS or CSS files (separated by a space) that are included in the correlated HTML outputs's `<head>` section
 - `TeamlistOutputPath`, `PairingsOutput`, `StandingsOutput`, `OverlayOutput`, `Player1Output` and `Player2Output` are the names/paths for the output files
 - `GithubOutputPath` is the root destination for all the files uploaded to the Github repository
 - `GithubIncludes` is the list of JS or CSS files (separated by a space) that are updated to the "resources" folder on the Github repository
-- `TranslateTeamlist` determines whether or not the teamlists will be rendered in the language specified in the `Language` setting
+- `TranslateTeamlist` determines whether or not the teamlists will be rendered in the language specified in the `Language` setting (if `LoadTranslation` is True, which is by default)
 
 Editing the import settings (`ColumnDelimiter`, `TextDelimiter`, `FirstRowIsHeader` and `HeaderFromFirstRecord`) is heavily discouraged: since all of the VGCTourHelper internal data depends on them, modifying their values could lead to unexpected errors. It's always easier to adapt your CSV format to match the configuration than to refactor all the data files.
 
@@ -83,7 +89,6 @@ Inside the config the following rules apply
 - the `{App}` macro will be replaced by the full path on which the application is placed
 - the `{TournamentName}` macro will be replaced by the name of the tournament - be careful as this macro is available only for tournament-related settings, not for data-settings
 - all of the names can be used in templates as macros with the `%Config:SettingName%` syntax
-- almost all the settings have a default value that is used when the setting is empty or not defined on the file (for a deeper look on this values see [this file](./Home/Resources/config_template.yaml))
 - any custom setting can be added and then used as a macro with the same `%Config:SettingName%` syntax
 
 ## Templates

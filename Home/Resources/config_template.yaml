@@ -3,16 +3,15 @@
 ### No validation is done on this configuration: edit at your own risk.
 
 #### Generic
-Language: It
-SaveOnExit: False
+Language: En
 LoadTranslations: True
 
 #### Resource paths and folders
 DataPath: {App}Resources\Data
 AssetsUrl: https://cdn.jsdelivr.net/gh/relderDev/vgctourhelper-resources@latest/Assets/
-PokemonAssetsFolder: Pokemon
-TypeAssetsFolder: Types
-ItemAssetsFolder: Items
+PokemonAssetsFolder: Pokemon/
+TypeAssetsFolder: Types/
+ItemAssetsFolder: Items/
 
 #### CSV imports
 ColumnDelimiter: ;

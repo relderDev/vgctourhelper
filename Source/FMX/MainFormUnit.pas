@@ -154,6 +154,7 @@ begin
       raise Exception.CreateFmt(DEFAULTS_MISSING, [LDefaultsFileName]);
     FConfigEditor := TConfigForm.Create(Self);
     FConfigEditor.Init(LDefaultsFileName);
+    PokemonContext.SaveOnExit := True;
   end;
   FConfigEditor.Show(PokemonContext.Config);
 end;

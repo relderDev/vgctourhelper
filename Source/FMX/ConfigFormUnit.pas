@@ -21,6 +21,7 @@ type
 
   TConfigForm = class(TForm)
   strict private
+    FDefaults: TAKDynRecord;
     FSectionFont: TFont;
     FSubsectionFont: TFont;
     FLastComponentBottom: Integer;
@@ -28,15 +29,18 @@ type
     FSubSectionCounter: Integer;
     FConfig: TAKDynRecord;
     FCustomFields: Boolean;
-    procedure SetupEditor(const AEditor: TControl; const AName: string);
+    procedure SetupEditor(const AEditor: TControl; const AName: string;
+      const AHint: string);
     procedure AddSection(const AText: string);
     procedure AddSubSection(const AText: string);
-    procedure AddEditor(const AName, AValue: string; const AComment: string = '');
+    procedure AddEditor(const AName: string; const AValue: Variant; const AHint: string = '');
     procedure LoadDefaults(const AFileName: string);
+    procedure ApplyControlToConfig(const AControl: TControl);
     procedure ApplyConfig(const AConfig: TAKDynRecord);
     function AddLabel(const AText: string): TLabel;
     function AddTitle(const AName, AText: string; const AFont: TFont): TLabel;
     function GetMaxWidth(const AControl: TControl): Single;
+    function GetEditorValue(const AControl: TControl): Variant;
   public
     procedure AfterConstruction; override;
     procedure Init(const AFileName: string);
@@ -69,59 +73,54 @@ end;
 
 { TConfigForm }
 
-procedure TConfigForm.AddEditor(const AName, AValue, AComment: string);
+procedure TConfigForm.AddEditor(const AName: string; const AValue: Variant;
+  const AHint: string);
 var
-  LValue: Variant;
   LTypeName: string;
   LCheckBox: TCheckBox;
   LDTPicker: TDateEdit;
   LNumber: TNumberBox;
   LEdit: TEdit;
 begin
-  LValue := AKVarFromString(AValue);
-  LTypeName := AKVarTypeName(LValue);
+  LTypeName := AKVarTypeName(AValue);
   if LTypeName = 'Boolean' then
   begin
     LCheckBox := TCheckBox.Create(Self);
-    SetupEditor(LCheckBox, AName);
-    LCheckBox.IsChecked := LValue;
+    SetupEditor(LCheckBox, AName, AHint);
+    LCheckBox.IsChecked := AValue;
     LCheckBox.Text := '';
   end
   else if LTypeName = 'DateTime' then
   begin
     LDTPicker := TDateEdit.Create(Self);
-    SetupEditor(LDTPicker, AName);
-    LDTPicker.DateTime := LValue;
+    SetupEditor(LDTPicker, AName, AHint);
+    LDTPicker.DateTime := AValue;
     LDTPicker.TextSettings.Font.Size := 11;
   end
   else if LTypeName = 'Integer' then
   begin
     LNumber := TNumberBox.Create(Self);
-    SetupEditor(LNumber, AName);
+    SetupEditor(LNumber, AName, AHint);
     LNumber.ValueType := TNumValueType.Integer;
-    LNumber.Value := LValue;
+    LNumber.Value := AValue;
     LNumber.TextSettings.Font.Size := 11;
   end
   else if LTypeName = 'Float' then
   begin
     LNumber := TNumberBox.Create(Self);
-    SetupEditor(LNumber, AName);
+    SetupEditor(LNumber, AName, AHint);
     LNumber.ValueType := TNumValueType.Float;
-    LNumber.Value := LValue;
+    LNumber.Value := AValue;
     LNumber.TextSettings.Font.Size := 11;
   end
   else
   begin
     LEdit := TEdit.Create(Self);
-    SetupEditor(LEdit, AName);
-    if VarIsNull(LValue) or VarIsEmpty(LValue) then
+    SetupEditor(LEdit, AName, AHint);
+    if VarIsNull(AValue) or VarIsEmpty(AValue) then
       LEdit.Text := ''
     else
-      LEdit.Text := LValue;
-    {$IFDEF D23+}
-    if AComment <> '' then
-      LEdit.TextPrompt := AComment;
-    {$ENDIF}
+      LEdit.Text := AValue;
     LEdit.TextSettings.Font.Size := 11;
   end;
 end;
@@ -173,6 +172,7 @@ end;
 procedure TConfigForm.AfterConstruction;
 begin
   inherited;
+  FDefaults := TAKDynRecord.Create;
   FSectionFont := TFont.Create;
   FSectionFont.Size := 14;
   FSectionFont.Style := [TFontStyle.fsBold];
@@ -217,6 +217,23 @@ begin
     end);
 end;
 
+procedure TConfigForm.ApplyControlToConfig(const AControl: TControl);
+var
+  LName: string;
+  LValue: Variant;
+begin
+  Assert(Assigned(FConfig));
+
+  LName := AControl.Name;
+  LValue := GetEditorValue(AControl);
+  if VarIsStr(LValue) and (LValue = '') then
+    FConfig.Remove(LName)
+  else if FDefaults.HasField(LName) and (FDefaults[LName] = LValue) then
+    FConfig.Remove(LName)
+  else
+    FConfig[LName] := LValue;
+end;
+
 procedure TConfigForm.Cancel_ButtonClick(Sender: TObject);
 begin
   Hide;
@@ -224,6 +241,7 @@ end;
 
 destructor TConfigForm.Destroy;
 begin
+  FreeAndNil(FDefaults);
   FreeAndNil(FSectionFont);
   FreeAndNil(FSubsectionFont);
   inherited;
@@ -232,6 +250,20 @@ end;
 procedure TConfigForm.FormHide(Sender: TObject);
 begin
   FConfig := nil;
+end;
+
+function TConfigForm.GetEditorValue(const AControl: TControl): Variant;
+begin
+  Assert(Assigned(AControl));
+
+  if AControl is TCheckBox then
+    Result := (AControl as TCheckBox).IsChecked
+  else if AControl is TDateEdit then
+    Result := (AControl as TDateEdit).DateTime
+  else if AControl is TNumberBox then
+    Result := (AControl as TNumberBox).Value
+  else
+    Result := (AControl as TEdit).Text;
 end;
 
 function TConfigForm.GetMaxWidth(const AControl: TControl): Single;
@@ -251,8 +283,10 @@ end;
 procedure TConfigForm.LoadDefaults(const AFileName: string);
 var
   LDefaults: TStringList;
+  LName: string;
   I: Integer;
 begin
+  FDefaults.Clear;
   LDefaults := TStringList.Create;
   try
     LDefaults.NameValueSeparator := ':';
@@ -269,10 +303,12 @@ begin
         Continue
       else
       begin
+        LName := Trim(LDefaults.Names[I]);
+        FDefaults.SetValueFromText(LName, Trim(LDefaults.ValueFromIndex[I]));
         if (I > 0) and LDefaults[I - 1].StartsWith('# ') then
-          AddEditor(Trim(LDefaults.Names[I]), Trim(LDefaults.ValueFromIndex[I]), StripPrefix(LDefaults[I - 1], '# '))
+          AddEditor(LName, FDefaults[LName], StripPrefix(LDefaults[I - 1], '# '))
         else
-          AddEditor(Trim(LDefaults.Names[I]), Trim(LDefaults.ValueFromIndex[I]));
+          AddEditor(LName, FDefaults[LName]);
       end;
     end;
   finally
@@ -286,22 +322,12 @@ var
   LControl: TControl;
 begin
   for LControl in Controls_ScrollBox.Content.Controls do
-  begin
-    if LControl is TLabel then
-      Continue;
-    if LControl is TCheckBox then
-      FConfig.SetBoolean(LControl.Name, (LControl as TCheckBox).IsChecked)
-    else if LControl is TDateEdit then
-      FConfig.SetDateTime(LControl.Name, (LControl as TDateEdit).DateTime)
-    else if LControl is TNumberBox then
-      FConfig[LControl.Name] := (LControl as TNumberBox).Value
-    else
-      FConfig.SetString(LControl.Name, (LControl as TEdit).Text);
-  end;
+    if not (LControl is TLabel) then
+      ApplyControlToConfig(LControl);
   Hide;
 end;
 
-procedure TConfigForm.SetupEditor(const AEditor: TControl; const AName: string);
+procedure TConfigForm.SetupEditor(const AEditor: TControl; const AName, AHint: string);
 var
   LLabel: TLabel;
 begin
@@ -313,6 +339,8 @@ begin
   AEditor.Position.X := LLabel.Position.X + LLabel.Width + 10;
   AEditor.Position.Y := LLabel.Position.Y - 3;
   AEditor.Width := GetMaxWidth(AEditor);
+  AEditor.Hint := AHint;
+  AEditor.ShowHint := True;
   FLastComponentBottom := Trunc(AEditor.Position.Y + AEditor.Height);
 end;
 

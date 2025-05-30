@@ -21,6 +21,7 @@ type
     FConfig: TAKDynRecord;
     FLanguage: TPokemonDataLanguage;
     FSVGTeraTypes: TAKDynRecord;
+    FSaveOnExit: Boolean;
     class var FConfigName: string;
     class var FInstance: TPokemonContext;
     procedure SetConfigDefaults;
@@ -32,6 +33,7 @@ type
     procedure SetKeepDataOpen(const AValue: Boolean);
     procedure SetLanguage(const AValue: string);
     function DefaultKeyFieldName(const ADataType: TPokemonDataType): string;
+    function DefaultDataFileName(const ADataType: TPokemonDataType): string;
     function DefaultAssetFieldName(const ADataType: TPokemonDataType): string;
     function InitDatabase(const ADataType: TPokemonDataType): TPokemonDatabase;
     function GetDatabase(const ADataType: TPokemonDataType): TPokemonDatabase;
@@ -63,6 +65,7 @@ type
     property Lang: TPokemonDataLanguage read FLanguage;
     property Language: string read GetLanguage write SetLanguage;
     property LanguageExtended: string read GetLanguageExtended;
+    property SaveOnExit: Boolean read FSaveOnExit write FSaveOnExit;
     class property ConfigName: string read FConfigName write FConfigName;
     class property Instance: TPokemonContext read GetInstance;
     procedure Open(const ADataType: TPokemonDataType); overload;
@@ -129,6 +132,7 @@ begin
   SetConfigDefaults;
   Language := Config.GetString('Language', 'en');
   FSVGTeraTypes := TAKDynRecord.Create;
+  FSaveOnExit := False;
 
   // Add all "Config:MacroName" macros to the application's scope.
   TAKAppMacrosRegistry.Instance.RegisterExpander('Config', Config.AsExpander);
@@ -138,7 +142,7 @@ destructor TPokemonContext.Destroy;
 begin
   FreeData;
   FreeAndNil(FSVGTeraTypes);
-  if Config.GetBoolean('SaveOnExit') then
+  if SaveOnExit then
     Config.SaveToFile(AppPath + ConfigName);
   FreeAndNil(FConfig);
   inherited;
@@ -150,6 +154,17 @@ begin
     dtPokemon: Result := 'Dex_Number';
     dtItem: Result := 'Number2';
     dtType: Result := 'Type';
+  end;
+end;
+
+function TPokemonContext.DefaultDataFileName(const ADataType: TPokemonDataType): string;
+begin
+  case ADataType of
+    dtPokemon: Result := 'Pokemon.csv';
+    dtType: Result := 'Colors.csv';
+    dtItem: Result := 'Items.csv';
+    dtAbility: Result := 'Abilities.csv';
+    dtMove: Result := 'Moves.csv';
   end;
 end;
 
@@ -181,7 +196,7 @@ end;
 function TPokemonContext.GetAssetsBaseUrl: string;
 begin
   Result := Config.GetString('AssetsUrl',
-    'https://cdn.jsdelivr.net/gh/relderDev/vgctourhelper-resources@main/Assets/');
+    'https://cdn.jsdelivr.net/gh/relderDev/vgctourhelper-resources@latest/Assets/');
 end;
 
 function TPokemonContext.GetAssetsFolder(const ADataType: TPokemonDataType): string;
@@ -241,8 +256,10 @@ end;
 
 function TPokemonContext.GetDataPath: string;
 begin
-  Result := ReplaceText(IncludeTrailingPathDelimiter(Config.GetString('DataPath',
-    ConcatPath(DEFAULT_DATA_PATH))), '{App}', AppPath);
+  Result := ReplaceText(Config.GetString('DataPath'), '{App}', AppPath);
+  if Result = '' then
+    Result := ConcatPath(DEFAULT_DATA_PATH);
+  Result := IncludeTrailingPathDelimiter(Result);
 end;
 
 class function TPokemonContext.GetInstance: TPokemonContext;
@@ -318,7 +335,7 @@ begin
   else
     raise Exception.CreateFmt('Format "%s" not supported.', [LDataFormat]);
 
-  Result.FileName := DataPath + Config.GetString(LTypeName + 'DataFile');
+  Result.FileName := DataPath + Config.GetString(LTypeName + 'DataFile', DefaultDataFileName(ADataType));
   Result.Url := Config.GetString(LTypeName + 'DataUrl');
   Result.Config['ColumnDelimiter'] := Config.GetString('ColumnDelimiter', ';');
   Result.Config['TextDelimiter'] := Config.GetString('TextDelimiter', '"');
@@ -409,8 +426,6 @@ var
   LTypeName: string;
   LType: TPokemonDataType;
 begin
-  DataPath := IncludeTrailingPathDelimiter(Config.GetString('DataPath',
-    ConcatPath(DEFAULT_DATA_PATH)));
   AssetsBaseUrl := AssetsBaseUrl;
   for LTypeName in POKEMON_ASSETS_DATA do
   begin
