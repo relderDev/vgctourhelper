@@ -89,7 +89,7 @@ Inside the config the following rules apply
 
 ### [Teamlist](./Resources/teamlist.html)
 
-It's one of the only two mandatory template files: it should contain the basic structure of an HTML file with the specific `%INCLUDE:Teamlist%` macro in its `<head>` section (which works as an "anchor" to insert the include files mentioned in the [config section](#Config)), any number of macros on the player data (as `%FirstName%` or `%Wins%`) and the special macro `%Team%`, which will be replaced with one entry of the [pokémon template](#Templates###Pokemon) for each member of that player's team.
+It's one of the only two mandatory template files: it should contain the basic structure of an HTML file with the specific `%INCLUDE:Teamlist%` macro in its `<head>` section (which works as an "anchor" to insert the include files mentioned in the [config section](#Config)), any number of macros on the player data (as `%FirstName%` or `%Wins%`) and the special macro `%Team%`, which will be replaced with one entry of the [pokémon template](#Pokemon) for each member of that player's team.
 
 ### [Pokemon](./Resources/pokemon.html)
 
