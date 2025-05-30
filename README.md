@@ -66,7 +66,7 @@ When **AutoUpdate** is off none of this happens and you have to select the new f
 ## Config
 
 Most of the application settings are configurable: this can be done in the GUI by clicking the "Edit Config" button or by editing the [config file](./Home/Config.yaml). In the 99% of cases the default values are the right configuration for the app, but we are going to focus on those single settings that some users could want to edit.
-- `PlayerIdFieldName` and `PasteIdFieldName` are the column names for the Paste CSV (see [here](#Inputs-and-data-files#2))
+- `PlayerIdFieldName` and `PasteIdFieldName` are the column names for the Paste CSV (see [here](#Inputs-and-data-files))
 - `TeamlistTemplate`, `PokemonTemplate`, `PairingsTemplate`, `StandingsTemplate`, `TournamentTemplate` and `OverlayTemplate` are the HTML templates used: they can be changed in order to customize the appearance of the outputs
 - `TeamlistIncludes`, `PairingsIncludes` and `StandingsIncludes` are list of JS or CSS files (separated by a space) that are included in the correlated HTML outputs's `<head>` section
 - `TeamlistOutputPath`, `PairingsOutput`, `StandingsOutput`, `OverlayOutput`, `Player1Output` and `Player2Output` are the names/paths for the output files
