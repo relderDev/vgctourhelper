@@ -9,7 +9,7 @@ Starting off with what is always the first question: why Delphi?
 Delphi has numerous advantages over other programming languages, we could spend all day talking generally about its great feats like high performances or the usefulness of its IDE, but, instead, I think it's best to give a few practical reasons to why I almost didn't consider other languages for this project.
 1. I do already use Delphi in my work environment - this means I'm faster at writing Delphi code and I have a bunch of utilities ready-to-use that I don't have to search for and learn/rewrite from scratch
 2. Creating a GUI can be done extremely faster and in a much easier way than any alternative I tried
-3. Since the TOM software is available for both Windows and MacOS, it feels just right to use a tool that can target both platforms with one codebase, as Delphi does
+3. Since the TOM software is available for both Windows and macOS, it feels just right to use a tool that can target both platforms with one codebase and one GUI, as Delphi (with the help of [FMX](https://wikipedia.org/wiki/FireMonkey) does
 4. This application should be fast, lightweight and as "invisible" as possible, processing tournament updates in background and updating both the online page and the streaming - Delphi was just perfect for this use case: in most cases the application will run on the same machine that runs the streaming; being as little resource-consuming as possible is a must
 5. The application can be compiled with Delphi CE, which is free ([download it here](https://www.embarcadero.com/products/delphi/starter/free-download))
 

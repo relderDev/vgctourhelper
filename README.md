@@ -87,11 +87,11 @@ Inside the config the following rules apply
 
 ## Templates
 
-### [Teamlist](./Resources/teamlist.html)
+### [Teamlist](./Home/Resources/teamlist.html)
 
 It's one of the only two mandatory template files: it should contain the basic structure of an HTML file with the specific `%INCLUDE:Teamlist%` macro in its `<head>` section (which works as an "anchor" to insert the include files mentioned in the [config section](#Config)), any number of macros on the player data (as `%FirstName%` or `%Wins%`) and the special macro `%Team%`, which will be replaced with one entry of the [pokémon template](#Pokemon) for each member of that player's team.
 
-### [Pokemon](./Resources/pokemon.html)
+### [Pokemon](./Home/Resources/pokemon.html)
 
 The other mandatory template file, it should contain just a HTML fragment that represents a pokemon in a team.
 In addiction to macros on the pokemon data (such as `%PokemonIndex%`, `%Ability%`, `%Item%`, ...) it can contain the "indexing bracket macros", written as `<%MacroName%>`, that repeat everything that's inside them as many times as needed, replacing the keyword `#n#` with the index of the iteration. It's actually simpler than it seems: take a look at the following portion
