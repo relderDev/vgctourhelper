@@ -1,7 +1,7 @@
 # VGCTourHelper
 
 Are you organizing a VGC tournament you would like to stream but you haven't got any fancy OTS graphic for the streamed matches or any pairings scene? Or maybe you just want to automatically post pairings online for your players? You are in the right place, VGCTourHelper is built exactly with those purposes in mind!
-VGCTourHelper is a tool aimed to help you in running your tournament while avoiding any unnecessary complicated installation or setup. It is designed to work with TOM (Tournament Operation Manager) outputs and with the standard team export of [Pokémon Showdown](play.pokemonshowdown.com) (as well as [PokePaste](poekpast.es) and all of its forks).
+VGCTourHelper is a tool aimed to help you in running your tournament while avoiding any unnecessary complicated installation or setup. It is designed to work with TOM (Tournament Operation Manager) outputs and with the standard team export of [Pokémon Showdown](https://play.pokemonshowdown.com) (as well as [PokePaste](https://poekpast.es) and all of its forks).
 
 ## Compiling and installing
 
