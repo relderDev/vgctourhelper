@@ -13,6 +13,7 @@ With that out of the way, just run the executable and you are done!
 ## Running
 
 Here is the basic flow of the application: just launch it and follow these steps
+0. *(only on the very first run, when streaming)* link your OBS scene to the [output files](#Outputs)
 1. import a TDF file (TOM output) to initialize the tournament
 2. import a CSV file containing the list of Player IDs and Pastes
 3. start the tournament
