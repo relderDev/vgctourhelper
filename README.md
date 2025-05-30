@@ -68,7 +68,7 @@ When **AutoUpdate** is off none of this happens and you have to select the new f
 
 Most of the application settings are configurable: this can be done in the GUI by clicking the "Edit Config" button or by editing the [config file](./Home/Config.yaml).
 
-The [template configuration file](./Home/Resources/config_template) shows every configurable property and its default value, used when said entry is empty or not defined on the [config file](./Home/Config.yaml).
+The [template configuration file](./Home/Resources/config_template.yaml) shows every configurable property and its default value, used when said entry is empty or not defined on the [config file](./Home/Config.yaml).
 There are a few empty properties on the template file: those are there just for you to know that they are configurable options even if not used by default. **Do NOT edit the template file, it will break the "Edit Config" behaviour!**
 It's completely possible to run the application without any configuration file at all - it will run on the default values, it's actually the best approach -, the one published is this repository is just an example.
 
