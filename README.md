@@ -5,7 +5,7 @@ VGCTourHelper is a tool aimed to help you in running your tournament while avoid
 
 ## Compiling and installing
 
-This application supports all Delphi versions from XE8 onwards.
+This application supports all Delphi versions from XE8 onwards, it should always compile with no warnings or hints.
 Since this project uses FireMonkey components it can be built for both Windows and macOS. We are planning to publish compiled releases under [MilanoVGC](https://github.com/MilanoVGC).
 The only external library that this application relies on is [OpenSSL](https://github.com/openssl/openssl): on Windows you must download/build ssleay32.dll and libeay32.dll and place them on the same path as VGCTourHelper, on macOS OpenSSL should already be installed by default.
 With that out of the way, just run the executable and you are done!
