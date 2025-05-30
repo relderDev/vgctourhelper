@@ -1,18 +1,5 @@
-Assets/
-Ext/
-Home/Outputs/
-Home/TestData/
-Lib/
-Packages/
-Projects/XE3/
-Projects/D10_4/VGCTourHelperConsole.*
-Projects/D10_4/VGCTourHelperGUIMinimal.*
-Source/FastMM/
-Source/GUIMinimal/
-Source/Vcl/
 **/__history/
 **/__recovery/
-
 *.res
 *.local
 *.identcache
@@ -20,5 +7,3 @@ Source/Vcl/
 *.exe
 *.dll
 *.zip
-
-Home/github_token
