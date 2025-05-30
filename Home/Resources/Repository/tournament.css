@@ -1,0 +1,27 @@
+.vgc-pairings-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.vgc-round-header {
+  background-color: #adadad;
+  padding: 5px;
+  width: 15%;
+  min-width: 100px;
+  border-bottom: solid 1px;
+  text-align: center;
+}
+.vgc-round-header.vgc-round-active {
+  background-color: #ffffff;
+  text-decoration: underline;
+}
+.vgc-pairings-body {
+  display: flex;
+  justify-content: center;
+}
+.vgc-round-content {
+  display: none;
+}
+.vgc-round-content.vgc-round-active {
+  display: block;
+}

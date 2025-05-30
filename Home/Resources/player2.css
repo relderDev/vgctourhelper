@@ -1,0 +1,49 @@
+#player {
+  opacity: 0;
+  animation: backslide 0.7s;
+  animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+  animation-delay: 3.3s;
+}
+#team .pokemon {
+  opacity: 0;
+  animation: backslide 0.7s;
+  animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+  animation-delay: 4s;  
+}
+#team .pokemon:nth-child(2) {
+  animation-delay: 4.4s;
+}
+#team .pokemon:nth-child(3) {
+  animation-delay: 4.8s;
+}
+#team .pokemon:nth-child(4) {
+  animation-delay: 5.2s;
+}
+#team .pokemon:nth-child(5) {
+  animation-delay: 5.6s;
+}
+#team .pokemon:nth-child(6) {
+  animation-delay: 6s;
+}
+
+@keyframes backslide {
+  0% { transform: translate(100%, 0px); opacity: 0; }
+  100% { transform: translate(0px, 0px); opacity: 1; }
+}
+
+:root {
+  --pokemon-background-color: #ffffff;
+  --pokemon-name-background-color: #40C4FF;
+  --pokemon-name-text-color: #0D47A1;
+  --types-background-color: #0D47A1;
+  --ability-background-color: #3D5AFE;
+  --item-background-color: #0D47A1;
+  --moves-background-color: #0D47A1;
+  --sprite-background-color: #40C4FF;
+  --player-background-color: #0D47A1;
+  --text-color: #FFFFFF;
+}  

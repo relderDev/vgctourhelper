@@ -1,0 +1,76 @@
+.vgc-round-content {
+  max-width: var(--max-content-size);
+  min-width: var(--min-content-size);
+  font-size: var(--text-size);
+  font-family: var(--text-font);
+  width: 100%;
+}
+.vgc-match li {
+  background-color: #dedede;
+}
+
+.vgc-match li.match-outcome-0 {
+  background-color: transparent;
+}
+
+.vgc-matches li span {
+  display: flex;
+  align-items: center;
+  justify-self: flex-start;
+  padding: 0px 5px;
+}
+.vgc-matches li span.player-2 {
+  flex-direction: row-reverse;
+  justify-self: flex-end;
+}
+
+.match-outcome-5 .player-1 {
+  color: var(--winner-color);
+  font-weight: 600;
+}
+
+.match-outcome-1 .player-1 {
+  color: var(--winner-color);
+  font-weight: 600;
+}
+
+.match-outcome-2 .player-2 {
+  color: var(--winner-color);
+  font-weight: 600;
+}
+.vgc-round-title {
+  font-size: var(--title-size);
+  text-align: center;
+  padding-top: 16px;
+}
+.vgc-matches {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+.vgc-matches li {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 10% 43% 4% 43%;
+  align-items: center;
+  justify-items: center;
+  border-top: dotted 1px;
+  padding: 10px 0px;
+}
+.vgc-matches li span.match-table {
+  padding: 0;
+}
+.vgc-player-score {
+  text-wrap: nowrap; 
+}
+.player-ots img {
+  width: var(--text-size);
+}
+
+:root {
+  --text-size: 16px;
+  --text-font: sans-serif;  
+  --max-content-size: 700px;
+  --min-content-size: 350px;
+  --title-size: 32px;
+  --winner-color: green;
+}

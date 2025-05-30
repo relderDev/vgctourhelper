@@ -1,0 +1,90 @@
+### {App} = path of the application, {TournamentName} = the name of the tournament
+### All of the following properties can be inserted in templates as macros, like %Config:SomeProperty%
+### No validation is done on this configuration: edit at your own risk.
+
+#### Generic
+Language: It
+SaveOnExit: False
+LoadTranslations: True
+
+#### Resource paths and folders
+DataPath: {App}Resources\Data
+AssetsUrl: https://cdn.jsdelivr.net/gh/relderDev/vgctourhelper-resources@latest/Assets/
+PokemonAssetsFolder: Pokemon
+TypeAssetsFolder: Types
+ItemAssetsFolder: Items
+
+#### CSV imports
+ColumnDelimiter: ;
+TextDelimiter: "
+FirstRowIsHeader: True
+# as a rule of thumb avoid using column delimiter character inside text, it slows down performance a bit.
+
+#### JSON imports
+HeaderFromFirstRecord: True
+
+#### Data resources (valid formats are CSV and JSON)
+PokemonDataFormat: CSV
+TypeDataFormat: CSV
+ItemDataFormat: CSV
+AbilityDataFormat: CSV
+MoveDataFormat: CSV
+PokemonKeyFieldName: Pokémon
+PokemonAssetFieldName: Dex_Number
+TypeKeyFieldName: Type
+TypeAssetFieldName: Type
+ItemKeyFieldName: Number2
+ItemAssetFieldName: Item
+AbilityKeyFieldName: English
+MoveKeyFieldName: Move
+### If both "File" and "Url" are defined, "File" is used.
+PokemonDataFile: Pokemon.csv
+PokemonDataUrl:
+TypeDataFile: Colors.csv
+TypeDataUrl:
+ItemDataFile: Items.csv
+ItemDataUrl:
+AbilityDataFile: Abilities.csv
+AbilityDataUrl:
+MoveDataFile: Moves.csv
+MoveDataUrl:
+
+#### Player import (both CSV file and JSON url)
+PlayerIdFieldName: PlayerId
+PokePasteFieldName: Paste
+
+#### HTML templates and includes
+TeamlistTemplate: {App}Resources\teamlist.html
+PokemonTemplate: {App}Resources\pokemon.html
+# There is a built-in default template
+PairingsTemplate:
+# There is a built-in default template
+StandingsTemplate:
+# There is a built-in default template
+TournamentTemplate:
+OverlayTemplate: {App}Resources\overlay.html
+### Multiple files are listed separated by a space
+TeamlistIncludes: {App}Resources\teamlist.css {App}Resources\pokemon.css
+PairingsIncludes: {App}Resources\pairings.css
+StandingsIncludes: {App}Resources\standings.css
+TranslateTeamlist: False
+TeamlistIconUrl: https://images.icon-icons.com/1893/PNG/32/clipboard_120835.png
+
+#### Outputs
+TeamlistOutputPath: {App}Outputs\{TournamentName}\Teamlists
+PairingsOutput: {App}Outputs\Stream\pairings.html
+StandingsOutput: {App}Outputs\Stream\standings.html
+OverlayOutput: {App}Outputs\Stream\overlay.html
+### Swiss outputs = player outputs ending in "-swiss.txt" instead of ".html"
+Player1Output: {App}Outputs\Stream\player1.html
+Player2Output: {App}Outputs\Stream\player2.html
+
+#### Integration to push to Github repo
+GithubRepoOwner:
+GithubRepoName:
+# If not defined/empty it will be "main".
+GithubRepoBranch:
+# Root destination for all uploaded files
+GithubOutputPath: {TournamentName}
+### All files listed here (separated by space) will be uploaded to GithubOutputPath/resources
+GithubIncludes: {App}Resources\Repository\tournament.js {App}Resources\Repository\tournament.css {App}Resources\Repository\teamlist.css {App}Resources\Repository\pokemon.css {App}Resources\Repository\pairings.css {App}Resources\Repository\standings.css

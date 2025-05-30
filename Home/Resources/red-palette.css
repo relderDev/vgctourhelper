@@ -1,0 +1,12 @@
+:root {
+  --pokemon-background-color: #FFFFFF;
+  --pokemon-name-background-color: #FDC447;
+  --pokemon-name-text-color: #A81E2E;
+  --types-background-color: #A81E2E;
+  --ability-background-color: #EB1C2C;
+  --item-background-color: #A81E2E;
+  --moves-background-color: #A81E2E;
+  --sprite-background-color: #FDC447;
+  --player-background-color: #A81E2E;
+  --text-color: #FFFFFF;  
+}

@@ -1,0 +1,107 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#vgc-tournament-helper-teamlist {
+  max-width: 1080px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: var(--teamlist-height);
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+
+.vgc-player {
+  margin: 0px 0px 5px 5px;
+  display: flex;
+  min-height: var(--player-min-height);
+  max-height: var(--player-max-height);
+  height: 100%;
+  align-items: stretch;
+  font-size: 32px;
+}
+
+.vgc-team {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.vgc-player-score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  background-color: var(--player-background-color);
+  border-radius: var(--global-border-radius);
+  text-wrap: nowrap;
+  flex-shrink: 0;
+  width: 20%;
+}
+
+.vgc-player-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: var(--player-background-color);
+  border-radius: var(--global-border-radius);
+  box-sizing: border-box;
+}
+
+.vgc-player-score:empty {
+  display: none;
+}
+
+#player {
+  opacity: 0;
+  animation: slide 0.7s;
+  animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+  animation-delay: 0.3s;
+}
+#team .pokemon {
+  opacity: 0;
+  animation: slide 0.7s;
+  animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+  animation-delay: 1s;  
+}
+#team .pokemon:nth-child(2) {
+  animation-delay: 1.4s;
+}
+#team .pokemon:nth-child(3) {
+  animation-delay: 1.8s;
+}
+#team .pokemon:nth-child(4) {
+  animation-delay: 2.2s;
+}
+#team .pokemon:nth-child(5) {
+  animation-delay: 2.6s;
+}
+#team .pokemon:nth-child(6) {
+  animation-delay: 3s;
+}
+
+@keyframes slide {
+  0% { transform: translate(-100%, 0px); opacity: 0; }
+  100% { transform: translate(0px, 0px); opacity: 1; }
+}
+
+:root {
+  --global-border-radius: 15px;
+  --player-background-color: #A81E2E;
+  --text-color: #FFFFFF;
+  --player-min-height: 60px;
+  --player-max-height: 90px;
+  --teamlist-height: 1075px;  
+}

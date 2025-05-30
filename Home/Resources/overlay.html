@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard Layout</title>
+    
+    <!-- Google Fonts Link for Open Sans Bold -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<script>
+    async function updateElement(elementId, filePath) {
+        try {
+            const response = await fetch(filePath + '?t=' + Date.now()); 
+            if (!response.ok) {
+                console.error(`Error fetching ${filePath}: ${response.statusText}`);
+                return;
+            }
+            const text = await response.text();
+            const element = document.getElementById(elementId);
+            if (element && element.innerText !== text.trim()) {
+                element.innerText = text.trim(); 
+            }
+        } catch (error) {
+            console.error(`Failed to fetch or update ${elementId}:`, error);
+        }
+    }
+
+    // Function to update all elements
+    function updateAllData() {
+        updateElement('player1-score', 'p1_score.txt');
+        updateElement('player2-score', 'p2_score.txt');
+    }
+
+    updateAllData();
+
+    setInterval(updateAllData, 100); 
+
+</script>
+<body>
+
+    <div class="scoreboard">
+        <!-- Top Right Bar - ORDER INVERTED -->
+        <div class="player-bar top-right">
+            <span class="box yellow-box" id="player2-score">0</span> 
+            <span class="box info-box score" id="player2-swiss">%P2:Wins%/%P2:Losses%</span>
+            <span class="box info-box name" id="player2-name">%P2:FirstName% %P2:LastName%</span> 
+        </div>
+        
+        <!-- Bottom Left Bar -->
+        <div class="player-bar bottom-left">
+            <span class="box info-box name" id="player1-name">%P1:FirstName% %P1:LastName%</span> 
+            <span class="box info-box score" id="player1-swiss">%P1:Wins%/%P1:Losses%</span>
+            <span class="box yellow-box" id="player1-score">0</span>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>

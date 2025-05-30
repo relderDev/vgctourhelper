@@ -1,0 +1,35 @@
+<div class="pokemon" id="pokemon-%PokemonIndex%" index="%TeamIndex%">
+  <div class="pokemon-header">
+    <div class="pokemon-text name">%Pokemon%</div>
+    <div class="pokemon-type-sprites">
+      <div class="pokemon-main-types">
+        <%Types%>
+        <div class="pokemon-type type-#n#">
+          <img class="img-type-sprite type-sprite" src="%Config:AssetsUrl%%Config:TypeAssetsFolder%%Type#n#%.png">
+        </div>
+        <%Types%>
+      </div>
+      <div class="pokemon-teratype">%TeraTypeSvg%</div>
+    </div>
+  </div>
+  <div class="pokemon-item-ability">
+    <div class="pokemon-text ability">%Ability%</div>
+    <div class="pokemon-text item">%Item%</div>
+    <div class="item-sprite"><img class="img-item-sprite" src="%Config:AssetsUrl%%Config:ItemAssetsFolder%%ItemAsset%"></div>
+  </div>
+  <div class="pokemon-moves-sprite">
+    <div class="moves">
+    <%Moves%>
+      <div class="move-#n#">
+        <div class="move-sprite">
+          <img class="img-move-sprite type-sprite" src="%Config:AssetsUrl%%Config:TypeAssetsFolder%%Move#n#Type%.png">
+        </div>
+        <div class="pokemon-text move">%Move#n#%</div>
+      </div>
+    <%Moves%>
+    </div>
+    <div class="pokemon-sprites">
+      <div class="pokemon-sprite"><img class="img-pokemon-sprite" src="%Config:AssetsUrl%%Config:PokemonAssetsFolder%%PokemonIndex%.png"></div>
+    </div>
+  </div>
+</div>

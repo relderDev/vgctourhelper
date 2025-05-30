@@ -1,0 +1,64 @@
+object RepoTokenForm: TRepoTokenForm
+  Left = 0
+  Top = 0
+  BorderIcons = []
+  BorderStyle = Single
+  Caption = 'Input token'
+  ClientHeight = 70
+  ClientWidth = 600
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Save_Button: TButton
+    Position.X = 510.000000000000000000
+    Position.Y = 40.000000000000000000
+    TabOrder = 1
+    Text = 'Save'
+    OnClick = Save_ButtonClick
+  end
+  object Cancel_Button: TButton
+    Position.X = 420.000000000000000000
+    Position.Y = 40.000000000000000000
+    TabOrder = 2
+    Text = 'Cancel'
+    OnClick = Cancel_ButtonClick
+  end
+  object Token_Edit: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    Password = True
+    Position.X = 10.000000000000000000
+    Position.Y = 10.000000000000000000
+    Size.Width = 581.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnTyping = Token_EditTyping
+  end
+  object TogglePassword_Button: TButton
+    Position.X = 10.000000000000000000
+    Position.Y = 40.000000000000000000
+    TabOrder = 0
+    Text = 'Show/Hide'
+    OnClick = TogglePassword_ButtonClick
+  end
+  object TokenLengthTitle_Label: TLabel
+    Position.X = 100.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 81.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Token length:'
+    TabOrder = 4
+  end
+  object TokenLengthValue_Label: TLabel
+    Position.X = 180.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 31.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = '0'
+    TabOrder = 5
+  end
+end

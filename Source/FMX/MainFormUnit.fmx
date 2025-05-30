@@ -1,0 +1,474 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = Single
+  Caption = 'VGCTourHelper'
+  ClientHeight = 571
+  ClientWidth = 794
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object TournamentName_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 27.000000000000000000
+    Position.Y = 71.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'Tournament name'
+  end
+  object TournamentXml_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 10.000000000000000000
+    Position.Y = 44.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'TDF file (TOM output)'
+  end
+  object Pastes_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 65.000000000000000000
+    Position.Y = 127.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'Pastes file'
+  end
+  object StreamMatch_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 209.000000000000000000
+    Position.Y = 327.000000000000000000
+    Size.Width = 32.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'Match'
+  end
+  object Config_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 37.000000000000000000
+    Position.Y = 386.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'Config YAML file'
+  end
+  object Settings_Label: TLabel
+    StyledSettings = [Family, FontColor]
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 778.000000000000000000
+    Size.Height = 27.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.HorzAlign = Center
+    Text = 'Setting up'
+  end
+  object Streaming_Label: TLabel
+    StyledSettings = [Family, FontColor]
+    Position.X = 8.000000000000000000
+    Position.Y = 291.000000000000000000
+    Size.Width = 778.000000000000000000
+    Size.Height = 27.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.HorzAlign = Center
+    Text = 'Streaming'
+  end
+  object OtherConfig_Label: TLabel
+    StyledSettings = [Family, Size, FontColor]
+    Position.X = 8.000000000000000000
+    Position.Y = 361.000000000000000000
+    Size.Width = 778.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.HorzAlign = Center
+    Text = 'Other configuration and logging'
+  end
+  object LogLevel_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 663.000000000000000000
+    Position.Y = 389.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'Log level'
+  end
+  object SinglePasteId_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 177.000000000000000000
+    Position.Y = 182.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'PID'
+  end
+  object SinglePasteValue_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 305.000000000000000000
+    Position.Y = 182.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'URL/Text'
+  end
+  object SinglePasteTitle_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, FontColor]
+    Position.X = 37.000000000000000000
+    Position.Y = 182.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.Font.Size = 11.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.WordWrap = False
+    Text = 'MANUAL PASTE INPUT'
+  end
+  object StreamRound_Label: TLabel
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 37.000000000000000000
+    Position.Y = 327.000000000000000000
+    Size.Width = 84.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'Streamed round'
+  end
+  object TournamentName_Edit: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 2
+    Position.X = 120.000000000000000000
+    Position.Y = 68.000000000000000000
+    Size.Width = 430.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TextPrompt = 'If empty it will take the name from the XML file'
+    ParentShowHint = False
+    ShowHint = True
+  end
+  object TournamentBrowseFile_Button: TButton
+    Position.X = 711.000000000000000000
+    Position.Y = 41.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Browse...'
+    OnClick = TournamentBrowseFile_ButtonClick
+  end
+  object TournamentXml_Edit: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    Position.X = 120.000000000000000000
+    Position.Y = 41.000000000000000000
+    Size.Width = 585.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    ParentShowHint = False
+    ShowHint = False
+    OnChange = TournamentXml_EditChange
+  end
+  object TournamentInit_Button: TButton
+    Enabled = False
+    Position.X = 556.000000000000000000
+    Position.Y = 68.000000000000000000
+    Size.Width = 230.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = 'Initialize tournament'
+    OnClick = TournamentInit_ButtonClick
+  end
+  object Pastes_Edit: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 6
+    Position.X = 120.000000000000000000
+    Position.Y = 124.000000000000000000
+    Enabled = False
+    Size.Width = 349.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    OnChange = Pastes_EditChange
+  end
+  object PastesBrowseFile_Button: TButton
+    Enabled = False
+    Position.X = 475.000000000000000000
+    Position.Y = 124.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Text = 'Browse...'
+    OnClick = PastesBrowseFile_ButtonClick
+  end
+  object TournamentStart_Button: TButton
+    Enabled = False
+    Position.X = 8.000000000000000000
+    Position.Y = 210.000000000000000000
+    Size.Width = 778.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 13
+    Text = 'Start tournament!'
+    OnClick = TournamentStart_ButtonClick
+  end
+  object PastesPrint_Button: TButton
+    Enabled = False
+    Position.X = 556.000000000000000000
+    Position.Y = 124.000000000000000000
+    Size.Width = 230.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    Text = 'Print pastes'
+    OnClick = PastesPrint_ButtonClick
+  end
+  object Logger_ListBox: TListBox
+    Anchors = [akLeft, akBottom]
+    Position.X = 8.000000000000000000
+    Position.Y = 413.000000000000000000
+    Size.Width = 778.000000000000000000
+    Size.Height = 150.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 24
+    DisableFocusEffect = True
+    ItemHeight = 13.000000000000000000
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 774.000000000000000000
+    Viewport.Height = 146.000000000000000000
+  end
+  object TournamentAutoUpdateShow_Button: TButton
+    Position.X = 390.000000000000000000
+    Position.Y = 94.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 23.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Show listener'
+    Visible = False
+    OnClick = TournamentAutoUpdateShow_ButtonClick
+  end
+  object StreamMatchSelect_Button: TButton
+    Enabled = False
+    Position.X = 666.000000000000000000
+    Position.Y = 325.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 17
+    Text = 'Stream match!'
+    OnClick = StreamMatchSelect_ButtonClick
+  end
+  object StreamMatchSwitch_Button: TButton
+    Enabled = False
+    Position.X = 585.000000000000000000
+    Position.Y = 325.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 16
+    Text = 'Switch sides'
+    OnClick = StreamMatchSwitch_ButtonClick
+  end
+  object ReloadConfig_Button: TButton
+    Position.X = 408.000000000000000000
+    Position.Y = 386.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 20
+    Text = 'Reload config'
+    OnClick = ReloadConfig_ButtonClick
+  end
+  object Config_Edit: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 18
+    Text = '.\Config.yaml'
+    Position.X = 120.000000000000000000
+    Position.Y = 386.000000000000000000
+    Size.Width = 200.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ConfigBrowseFile_Button: TButton
+    Position.X = 327.000000000000000000
+    Position.Y = 386.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 19
+    Text = 'Browse...'
+    OnClick = ConfigBrowseFile_ButtonClick
+  end
+  object SinglePasteId_Edit: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 10
+    Position.X = 200.000000000000000000
+    Position.Y = 180.000000000000000000
+    Enabled = False
+    Size.Width = 100.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object SinglePastePrint_Button: TButton
+    Enabled = False
+    Position.X = 711.000000000000000000
+    Position.Y = 180.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 12
+    Text = 'Print paste'
+    OnClick = SinglePastePrint_ButtonClick
+  end
+  object ConfigEdit_Button: TButton
+    Position.X = 489.000000000000000000
+    Position.Y = 386.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 21
+    Text = 'Edit config'
+    OnClick = ConfigEdit_ButtonClick
+  end
+  object TournamentAutoUpdate_CheckBox: TCheckBox
+    Enabled = False
+    IsChecked = True
+    Position.X = 535.000000000000000000
+    Position.Y = 94.000000000000000000
+    Size.Width = 20.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+  end
+  object KeepDataOpen_CheckBox: TCheckBox
+    Enabled = False
+    IsChecked = True
+    Position.X = 535.000000000000000000
+    Position.Y = 150.000000000000000000
+    Size.Width = 20.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+  end
+  object KeepDataOpen_Label: TLabel
+    AutoSize = True
+    Enabled = False
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 230.000000000000000000
+    Position.Y = 150.000000000000000000
+    Size.Width = 305.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'Keep data open (faster when printing teamlists multiple times)'
+    TabOrder = 27
+  end
+  object TournamentAutoUpdate_Label: TLabel
+    AutoSize = True
+    Enabled = False
+    StyledSettings = [Family, Style, FontColor]
+    Position.X = 470.000000000000000000
+    Position.Y = 94.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 15.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 11.000000000000000000
+    Text = 'Auto update'
+    TabOrder = 26
+  end
+  object SinglePasteValue_Memo: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Enabled = False
+    Position.X = 356.000000000000000000
+    Position.Y = 180.000000000000000000
+    Size.Width = 349.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 29
+    Viewport.Width = 345.000000000000000000
+    Viewport.Height = 17.000000000000000000
+  end
+  object StreamMatch_PopupBox: TPopupBox
+    Enabled = False
+    Position.X = 244.000000000000000000
+    Position.Y = 325.000000000000000000
+    Size.Width = 335.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 15
+  end
+  object LogLevel_PopupBox: TPopupBox
+    Items.Strings = (
+      'None'
+      'Minimal'
+      'Low'
+      'Medium'
+      'High'
+      'Detailed')
+    ItemIndex = 5
+    Position.X = 711.000000000000000000
+    Position.Y = 386.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 23
+    OnChange = LogLevel_PopupBoxChange
+  end
+  object StreamRound_PopupBox: TPopupBox
+    Enabled = False
+    Position.X = 120.000000000000000000
+    Position.Y = 325.000000000000000000
+    Size.Width = 74.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 14
+    OnChange = StreamRound_PopupBoxChange
+  end
+  object FileOpenDialog: TOpenDialog
+    Left = 20
+    Top = 420
+  end
+  object RepoToken_Button: TButton
+    Position.X = 570.000000000000000000
+    Position.Y = 386.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 22
+    Text = 'Repo token'
+    Visible = False
+    OnClick = RepoToken_ButtonClick
+  end
+end

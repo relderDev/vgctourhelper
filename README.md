@@ -122,7 +122,7 @@ This is the only template without default (neither built-in nor a file): if no f
 
 ## License
 
-All of the VGCTourHelper code code is distributed under the terms of the [**Apache License 2.0**](https://www.apache.org/licenses/LICENSE-2.0.txt).
+All of the VGCTourHelper code code is distributed under the terms of the [**Apache License 2.0**](./LICENSE).
 
 ### Third-Party Code Notice
 
@@ -141,5 +141,5 @@ Additional details on code structure can be found [here](./Docs/CODE.md).
 ## Contact us
 
 If you have any feedback, suggestion or any comment, here is where you can find us:
-[relder](https://x.com/reldervgc) - Developer
-[shairaba](https://x.com/shairaba) - Project manager
+- [relder](https://x.com/reldervgc) - Developer
+- [shairaba](https://x.com/shairaba) - Project manager
