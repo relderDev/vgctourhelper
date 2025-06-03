@@ -143,7 +143,7 @@ begin
   FreeData;
   FreeAndNil(FSVGTeraTypes);
   if SaveOnExit then
-    Config.SaveToFile(AppPath + ConfigName);
+    Config.SaveToFile(AppPath + ConfigName, True);
   FreeAndNil(FConfig);
   inherited;
 end;

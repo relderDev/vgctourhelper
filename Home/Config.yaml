@@ -1,3 +1,11 @@
+# Comments are preserved
 GithubRepoName: hostedvgctours
+
+# And they can be on multiple lines,
+# as long as the last line is immediately before a property declaration
 GithubRepoOwner: relderDev
+
+# this comment is not preserved on save!
+
+####### the number of # doesn't matter (on the next save it will be marked with just one #)
 OverlayOutput: {App}Outputs\Stream\index.html

@@ -18,15 +18,19 @@ type
   TAKDynRecord = class(TAKExpanderBase)
   strict private
     FItems: TDictionary<string, Variant>;
+    FComments: TDictionary<string, string>;
     FDateTimeFormatIndex: Integer;
     FStrictDateTimeFormat: Boolean;
     FFloatFormatSettings: TFormatSettings;
     procedure SetDateTimeFormat(const AValue: string);
     procedure SetValue(const AName: string; const AValue: Variant);
+    procedure SetFieldComment(const AName, AValue: string);
     function HasNotNull(const AName: string): Boolean;
+    function GetFormattedComment(const AComment: string; const AIndent: Integer): string;
     function GetDateTimeFormatSettings: TFormatSettings;
     function GetDateTimeFormat: string;
     function GetValue(const AName: string): Variant;
+    function GetFieldComment(const AName: string): string;
     function GetFieldType(const AName: string): string;
     function GetFieldCount: Integer;
   strict protected
@@ -39,13 +43,14 @@ type
     property FloatFormatSettings: TFormatSettings read FFloatFormatSettings write FFloatFormatSettings;
     property Fields[const AName: string]: Variant read GetValue write SetValue; default;
     property FieldType[const AName: string]: string read GetFieldType;
+    property FieldComment[const AName: string]: string read GetFieldComment write SetFieldComment;
     property FieldCount: Integer read GetFieldCount;
     procedure LoadFromFile(const AFileName: string; const AEncoding: TEncoding); overload;
     procedure LoadFromFile(const AFileName: string); overload;
     procedure LoadFromXML(const AXMLRoot: IXMLNode); virtual;
     procedure LoadFromJSON(const AJSONObject: TJSONObject); virtual;
-    procedure SaveToFile(const AFileName: string; const AEncoding: TEncoding); overload;
-    procedure SaveToFile(const AFileName: string); overload;
+    procedure SaveToFile(const AFileName: string; const AIncludeComments: Boolean; const AEncoding: TEncoding); overload;
+    procedure SaveToFile(const AFileName: string; const AIncludeComments: Boolean); overload;
     procedure Clear;
     procedure Remove(const AName: string);
     /// <summary>Stores the string value as the appropriate variant type.</summary>
@@ -78,8 +83,7 @@ type
       const APredicate: TAKStringPredicate);
   public
     { Formatted data options }
-    function AsText(const AIndent: Integer): string; overload;
-    function AsText: string; overload;
+    function AsText(const AIncludeComments: Boolean = True; const AIndent: Integer = 0): string; overload;
     function AsTypedText: string;
     function AsJSONString(const ABeautified: Boolean = False): string;
   public
@@ -312,24 +316,26 @@ begin
   Result := ReplaceStr(Result, '#values#', IndentLines(LValues, LIndent));
 end;
 
-function TAKDynRecord.AsText(const AIndent: Integer): string;
+function TAKDynRecord.AsText(const AIncludeComments: Boolean; const AIndent: Integer): string;
 var
   LName: string;
   LLine: string;
+  LComment: string;
 begin
   for LName in FItems.Keys do
   begin
-    LLine := StringOfChar(' ', AIndent) + LName + ': ' + GetString(LName);
+    LLine := '';
+    LComment := FieldComment[LName];
+    if AIncludeComments and (LComment <> '') then
+      LLine := sLineBreak + GetFormattedComment(LComment, AIndent) + sLineBreak;
+    LLine := LLine + StringOfChar(' ', AIndent) + LName + ': ' + GetString(LName);
     if Result = '' then
       Result := LLine
     else
       Result := Result + sLineBreak + LLine;
   end;
-end;
-
-function TAKDynRecord.AsText: string;
-begin
-  Result := AsText(0);
+  if Pos(sLineBreak, Result) = 1 then
+    Delete(Result, Low(Result), Length(sLineBreak));
 end;
 
 function TAKDynRecord.AsTypedText: string;
@@ -357,6 +363,7 @@ constructor TAKDynRecord.Create;
 begin
   inherited;
   FItems := TDictionary<string, Variant>.Create(TIStringComparer.Ordinal);
+  FComments := TDictionary<string, string>.Create(TIStringComparer.Ordinal);
   FDateTimeFormatIndex := -1;
   FStrictDateTimeFormat := False;
   FFloatFormatSettings := TFormatSettings.Create;
@@ -366,6 +373,7 @@ end;
 destructor TAKDynRecord.Destroy;
 begin
   FreeAndNil(FItems);
+  FreeAndNil(FComments);
   inherited;
 end;
 
@@ -421,6 +429,12 @@ begin
     Result := DEFAULT_DT_FORMAT;
 end;
 
+function TAKDynRecord.GetFieldComment(const AName: string): string;
+begin
+  if FComments.ContainsKey(AName) then
+    Result := FComments[AName];
+end;
+
 function TAKDynRecord.GetFieldCount: Integer;
 begin
   Result := FItems.Count;
@@ -440,6 +454,20 @@ begin
   Result := ADefault;
   if HasNotNull(AName) and AKVarIsFloat(Fields[AName], LResult, FloatFormatSettings) then
     Result := LResult;
+end;
+
+function TAKDynRecord.GetFormattedComment(const AComment: string; const AIndent: Integer): string;
+var
+  LLines: TArray<string>;
+  I: Integer;
+begin
+  Result := '';
+  LLines := AComment.Split([sLineBreak]);
+  for I := Low(LLines) to High(LLines) do
+    if Result = '' then
+      Result := StringOfChar(' ', AIndent) + '# ' + LLines[I]
+    else
+      Result := Result + sLineBreak + StringOfChar(' ', AIndent) + '# ' + LLines[I];
 end;
 
 function TAKDynRecord.GetInteger(const AName: string;
@@ -499,7 +527,11 @@ procedure TAKDynRecord.LoadFromFile(const AFileName: string;
   const AEncoding: TEncoding);
 var
   LList: TStringList;
+  LName: string;
+  LComment: string;
+  LLine: string;
   I: Integer;
+  J: Integer;
 begin
   if not FileExists(AFileName) then
     raise AKException(EAKNotFoundError, 'File "%s" not found.', [AFileName]);
@@ -513,9 +545,26 @@ begin
     begin
       if Trim(LList[I]) = '' then
         Continue; // Skip empty lines
-      if Trim(LList[I])[1] = '#' then
+      if Trim(LList[I])[Low(LList[I])] = '#' then
         Continue; // Skip comments
-      SetValueFromText(LList.Names[I], LList.ValueFromIndex[I]);
+
+      LName := LList.Names[I];
+      SetValueFromText(LName, LList.ValueFromIndex[I]);
+      if HasField(LName) then
+      begin
+        LComment := '';
+        for J := I - 1 downto 0 do
+        begin
+          LLine := Trim(LList[J]);
+          if (LLine = '') or (LLine[Low(LLine)] <> '#') then
+            Break;
+          if LComment = '' then
+            LComment := LLine
+          else
+            LComment := LLine + sLineBreak + LComment;
+        end;
+        SetFieldComment(LName, LComment);
+      end;
     end;
   finally
     FreeAndNil(LList);
@@ -571,15 +620,15 @@ begin
   FItems.Remove(AName);
 end;
 
-procedure TAKDynRecord.SaveToFile(const AFileName: string;
+procedure TAKDynRecord.SaveToFile(const AFileName: string; const AIncludeComments: Boolean;
   const AEncoding: TEncoding);
 begin
-  SaveTextToFile(AFileName, AsText, AEncoding);
+  SaveTextToFile(AFileName, AsText(AIncludeComments), AEncoding);
 end;
 
-procedure TAKDynRecord.SaveToFile(const AFileName: string);
+procedure TAKDynRecord.SaveToFile(const AFileName: string; const AIncludeComments: Boolean);
 begin
-  SaveToFile(AFileName, TEncoding.UTF8NoBOM);
+  SaveToFile(AFileName, AIncludeComments, TEncoding.UTF8NoBOM);
 end;
 
 procedure TAKDynRecord.SetBoolean(const AName: string; const AValue: Boolean);
@@ -596,6 +645,43 @@ procedure TAKDynRecord.SetDateTimeFormat(const AValue: string);
 begin
   if not IsAcceptedDTFormat(AValue, FDateTimeFormatIndex) then
     raise AKException(EAKFormatError, 'Invalid DateTime format "%s".', [AValue]);
+end;
+
+procedure TAKDynRecord.SetFieldComment(const AName, AValue: string);
+var
+  LValue: string;
+
+  function StripCommentPrefix(const ALine: string): string;
+  var
+    LLine: string;
+    I: Integer;
+  begin
+    LLine := Trim(ALine);
+    for I := Low(LLine) to High(LLine) do
+      if LLine[I] <> '#' then
+      begin
+        Result := Trim(Copy(ALine, I));
+        Break;
+      end;
+  end;
+  function StripCommentPrefixes(const ALines: TArray<string>): string;
+  var
+    I: Integer;
+  begin
+    for I := Low(ALines) to High(ALines) do
+      ALines[I] := StripCommentPrefix(ALines[I]);
+    Result := string.Join(sLineBreak, ALines);
+  end;
+begin
+  if Pos(sLineBreak, AValue) > 0 then
+    LValue := StripCommentPrefixes(AValue.Split([sLineBreak]))
+  else
+    LValue := StripCommentPrefix(AValue);
+
+  if FComments.ContainsKey(AName) then
+    FComments[AName] := LValue
+  else
+    FComments.Add(AName, LValue);
 end;
 
 procedure TAKDynRecord.SetFloat(const AName: string; const AValue: Double);
